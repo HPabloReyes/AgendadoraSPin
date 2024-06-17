@@ -1,6 +1,6 @@
 import Form from "../components/form";
 
-export default function () {
+export default function Registro() {
   return (
     <>
       <Form></Form>
