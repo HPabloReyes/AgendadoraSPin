@@ -6,10 +6,16 @@ dbConnect();
 
 export async function GET() {
   try {
-    return NextResponse.json("La api funciona");
+    const response = await Users.find();
+    return NextResponse.json(response);
   } catch (error) {
     console.error(error);
-    return NextResponse.error(error);
+    return new NextResponse(JSON.stringify({ message: error.message }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
 }
 
