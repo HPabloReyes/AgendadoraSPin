@@ -27,7 +27,11 @@ export default function Form() {
         reset();
         setLocation("");
       } else {
-        console.error("Error submitting data:", response.statusText);
+        console.error("Error submitting data:", {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorData,
+        });
       }
     } catch (error) {
       console.error("Error submitting data:", error);
