@@ -1,7 +1,8 @@
 import Cita from "../components/cita";
 
 export default async function Citas() {
-  const getUrl = process.env.URL;
+  //const getUrl = process.env.URL;
+  const getUrl = "https://agendadora-s-pin.vercel.app";
   const res = await fetch(`${getUrl}/api/citas`, {
     cache: "no-store",
   });
