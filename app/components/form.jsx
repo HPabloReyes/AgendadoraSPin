@@ -15,7 +15,6 @@ export default function Form() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // console.log(JSON.stringify(data));
     try {
       const response = await fetch("api/citas", {
         method: "POST",
