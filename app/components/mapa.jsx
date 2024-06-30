@@ -55,7 +55,7 @@ function Mapa({ ubicacion }) {
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
-          zoom={16}
+          zoom={14}
           onLoad={onLoad}
           onUnmount={onUnmount}
         >
