@@ -1,3 +1,5 @@
+import Mapa from "./mapa";
+
 export default function Cita({
   tienda,
   telefono,
@@ -7,7 +9,7 @@ export default function Cita({
   dueño,
 }) {
   return (
-    <div className="grid grid-cols-2 text-center mb-4 p-1 shadow-sm shadow-gray-400 rounded-lg">
+    <div className="grid grid-cols-2 text-center mb-4 p-2 shadow-sm shadow-gray-400 rounded-lg bg-spin-blue ">
       <b className="col-span-2">
         <p>Nombre de la tienda: </p>
       </b>
@@ -27,7 +29,10 @@ export default function Cita({
         <p>Hora:</p>
         <p>{hora}</p>
       </div>
-      <div className="mt-2 col-span-2">{ubicacion}</div>
+      <div className="mt-2 col-span-2">
+        <div className="mb-2">{ubicacion}</div>
+        <Mapa ubicacion={ubicacion}></Mapa>
+      </div>
     </div>
   );
 }

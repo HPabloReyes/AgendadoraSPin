@@ -1,15 +1,16 @@
 import Cita from "../components/cita";
 
 export default async function Citas() {
-  //const getUrl = process.env.URL;
-  const getUrl = "https://agendadora-s-pin.vercel.app";
+  const getUrl = process.env.NEXT_PUBLIC_URL;
+  // console.log("URL", getUrl);
+  //const getUrl = "https://agendadora-s-pin.vercel.app";
   const res = await fetch(`${getUrl}/api/citas`, {
     cache: "no-store",
   });
   const json = await res.json();
   // console.log(json);
   return (
-    <h1>
+    <div>
       {json.map((e) => (
         <Cita
           key={e._id}
@@ -21,6 +22,6 @@ export default async function Citas() {
           ubicacion={e.ubicacion}
         ></Cita>
       ))}
-    </h1>
+    </div>
   );
 }
