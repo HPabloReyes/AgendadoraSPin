@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
         <nav>
           <Navigation></Navigation>
         </nav>
-        <main className="m-6">{children}</main>
+        <main className="m-6 font-roboto">{children}</main>
       </body>
     </html>
   );
