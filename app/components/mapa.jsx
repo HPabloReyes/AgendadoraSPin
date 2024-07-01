@@ -27,9 +27,12 @@ function Mapa({ ubicacion }) {
     }
   }, [ubicacion]);
 
+  let KEY = "AIzaSyB6m78RYq8-EuPcpvdJYMSMfEOjWQmbep0";
+
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: API_KEY,
+    googleMapsApiKey: KEY,
+    //googleMapsApiKey: API_KEY,
   });
 
   const [map, setMap] = useState(null);
