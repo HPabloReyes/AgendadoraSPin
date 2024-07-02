@@ -7,6 +7,7 @@ const usersSchema = new Schema({
   dia: { type: String, required: [true, "dia is required"] },
   hora: { type: String, required: [true, "hora is required"] },
   ubicacion: { type: String, required: [true, "ubicacion is required"] },
+  idKof: { type: String, required: false },
 });
 
 const Users = mongoose.models.Users || mongoose.model("Users", usersSchema);

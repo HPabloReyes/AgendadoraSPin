@@ -7,6 +7,7 @@ export default function Cita({
   hora,
   ubicacion,
   dueño,
+  idKof,
 }) {
   return (
     <div className="grid grid-cols-2 text-left mb-4 p-2 shadow-sm bg-slate-50 shadow-gray-400 rounded-lg font-medium">
@@ -16,12 +17,12 @@ export default function Cita({
           Datos de la tienda{" "}
         </p>
       </b>
+      <p className=" ">ID KOF: </p>
+      <p className=" text-center">{idKof} </p>
       <p className="my-2 font-extrabold">Nombre de la tienda: </p>
       <p className="my-2 font-extrabold text-center">{tienda}</p>
       <p className="">Nombre del dueño: </p>
       <p className="text-center">{dueño}</p>
-      <div className="bg-gradient-conic h-1 col-span-2"> </div>
-
       <p className="my-2 font-extrabold">Numero Telefónico: </p>
       <p className="my-2 font-extrabold text-center">{telefono}</p>
       <p className="col-span-2 text-center">

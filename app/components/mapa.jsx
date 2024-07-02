@@ -10,6 +10,7 @@ const containerStyle = {
 
 function Mapa({ ubicacion }) {
   const API_KEY = process.env.NEXT_PUBLIC_API;
+  let KEY = "AIzaSyB6m78RYq8-EuPcpvdJYMSMfEOjWQmbep0";
   const regex = /Lat:\s*([-?\d.]+),\s*Lon:\s*([-?\d.]+)/;
   const matches = ubicacion.match(regex);
 
@@ -26,8 +27,6 @@ function Mapa({ ubicacion }) {
       );
     }
   }, [ubicacion]);
-
-  let KEY = "AIzaSyB6m78RYq8-EuPcpvdJYMSMfEOjWQmbep0";
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",

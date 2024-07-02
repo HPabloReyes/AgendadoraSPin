@@ -18,6 +18,7 @@ module.exports = {
       },
       colors: {
         "spin-blue": "#22377E", // Azul Spin premia
+        "spin-secondary-blue": "rgb(0,183,198)", //Azul secundario Spin Premia
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],

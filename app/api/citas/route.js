@@ -20,7 +20,8 @@ export async function GET() {
 }
 
 export async function POST(req) {
-  const { dueño, tienda, telefono, dia, hora, ubicacion } = await req.json();
+  const { dueño, tienda, telefono, dia, hora, ubicacion, idKof } =
+    await req.json();
 
   const apoimentData = {
     dueño,
@@ -29,6 +30,7 @@ export async function POST(req) {
     dia,
     hora,
     ubicacion,
+    idKof,
   };
   try {
     const newApoiment = new Users(apoimentData);
