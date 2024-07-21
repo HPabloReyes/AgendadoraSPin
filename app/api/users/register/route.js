@@ -1,12 +1,12 @@
 import dbConnect from "@/app/lib/mongodb";
 import { NextResponse } from "next/server";
-import Citas from "@/app/models/apoiments";
+import Users from "@/app/models/users";
 
 dbConnect();
 
 export async function GET() {
   try {
-    const response = await Citas.find();
+    const response = await Users.find();
     return NextResponse.json(response);
   } catch (error) {
     console.error(error);
@@ -20,22 +20,17 @@ export async function GET() {
 }
 
 export async function POST(req) {
-  const { dueño, tienda, telefono, dia, hora, ubicacion, idKof } =
-    await req.json();
+  const { usuario, contraseña } = await req.json();
 
-  const apoimentData = {
-    dueño,
-    tienda,
-    telefono,
-    dia,
-    hora,
-    ubicacion,
-    idKof,
+  const userData = {
+    usuario,
+    contraseña,
   };
+
   try {
-    const newApoiment = new Citas(apoimentData);
-    const savedInfo = await newApoiment.save();
-    console.log("informacion guardada", savedInfo);
+    const newUser = new Users(userData);
+    const savedInfo = await newUser.save();
+    console.log("Usuario guardado", savedInfo);
     return NextResponse.json({
       msg: "successful request",
     });

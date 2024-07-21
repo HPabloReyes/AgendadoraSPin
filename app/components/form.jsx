@@ -56,7 +56,10 @@ export default function Form() {
   };
 
   return (
-    <form className=" p-2 w-full max-w-md" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className=" p-2 w-full max-w-md mx-auto"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <input
         className="w-full p-3 mb-4 border rounded text-center"
         placeholder="ID KOF"

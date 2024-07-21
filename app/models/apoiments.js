@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const usersSchema = new Schema({
+const citasSchema = new Schema({
   dueño: { type: String, required: [true, "dueño is required"] },
   tienda: { type: String, required: [true, "tienda is required"] },
   telefono: { type: String, required: [true, "telefono is required"] },
@@ -10,6 +10,6 @@ const usersSchema = new Schema({
   idKof: { type: String, required: false },
 });
 
-const Users = mongoose.models.Users || mongoose.model("Users", usersSchema);
+const Citas = mongoose.models.Citas || mongoose.model("Citas", citasSchema);
 
-export default Users;
+export default Citas;
