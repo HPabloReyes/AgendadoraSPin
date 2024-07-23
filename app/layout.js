@@ -3,6 +3,7 @@ import Navigation from "./components/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import { Providers } from "./redux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,20 +15,22 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ToastContainer />
-        <header className="flex flex-col items-center justify-center bg-gray-100">
-          <img
-            src="/spnegocios.png"
-            className="rounded-md mb-6 max-w-xs mt-6"
-            alt="Logo"
-          ></img>
-        </header>
-        <nav>
-          <Navigation></Navigation>
-        </nav>
-        <main className="m-6 font-roboto">{children}</main>
-      </body>
+      <Providers>
+        <body className={inter.className}>
+          <ToastContainer />
+          <header className="flex flex-col items-center justify-center bg-gray-100">
+            <img
+              src="/spnegocios.png"
+              className="rounded-md mb-6 max-w-xs mt-6"
+              alt="Logo"
+            ></img>
+          </header>
+          <nav>
+            <Navigation></Navigation>
+          </nav>
+          <main className="m-6 font-roboto">{children}</main>
+        </body>
+      </Providers>
     </html>
   );
 }

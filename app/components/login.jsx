@@ -3,8 +3,11 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/userSlice";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -20,7 +23,7 @@ export default function Login() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    //console.log(data);
     try {
       const response = await fetch("api/users/login", {
         method: "POST",
@@ -29,6 +32,9 @@ export default function Login() {
       });
       if (response.ok) {
         toast.success("Usuario encontrado");
+        const data = await response.json();
+        //console.log(data);
+        dispatch(setUser(data));
       } else {
         console.error("Error submitting data:", response.statusText);
         toast.warn("Error submitting data: " + response.statusText);
