@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import { Providers } from "./redux/provider";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +20,13 @@ export default function RootLayout({ children }) {
         <body className={inter.className}>
           <ToastContainer />
           <header className="flex flex-col items-center justify-center bg-gray-100">
-            <img
-              src="/spnegocios.png"
-              className="rounded-md mb-6 max-w-xs mt-6"
-              alt="Logo"
-            ></img>
+            <Link href="/">
+              <img
+                src="/spnegocios.png"
+                className="rounded-md mb-6 max-w-xs mt-6"
+                alt="Logo"
+              ></img>
+            </Link>
           </header>
           <nav>
             <Navigation></Navigation>
