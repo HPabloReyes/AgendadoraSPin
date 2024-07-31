@@ -56,3 +56,12 @@ export async function POST(req) {
     );
   }
 }
+
+export async function GET() {
+  try {
+    const data = await Rutas.find();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json(`Error Getting data: ${error.message}`);
+  }
+}
