@@ -11,11 +11,8 @@ export default async function Rutas() {
   return (
     <div>
       {json.map((e) => (
-        <Link href={`Rutas/${e._id}`}>
-          <div
-            key={e.id}
-            className="bg-white shadow-md rounded-lg p-6 hover:bg-gray-100 transition duration-300 ease-in-out"
-          >
+        <Link key={e._id} href={`Rutas/${e._id}`}>
+          <div className="bg-white shadow-md rounded-lg p-6 hover:bg-gray-100 transition duration-300 ease-in-out">
             <h2 className="text-xl font-semibold mb-2">{e.name}</h2>
             <p className="text-gray-700">Ver detalles</p>
           </div>
