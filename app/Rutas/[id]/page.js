@@ -8,6 +8,8 @@ export default async function RutaDetail({ params: { id } }) {
   });
   const json = await res.json();
 
+  //console.log(json.features);
+
   return (
     <div>
       <div className="text-center">{json.name}</div>

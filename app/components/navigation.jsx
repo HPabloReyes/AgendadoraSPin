@@ -16,7 +16,7 @@ export default function Navigation() {
               key={index}
               className="hover:text-black cursor-pointer font-medium"
             >
-              <Link href={e}>{e}</Link>
+              <Link href={`/${e}`}>{e}</Link>
             </li>
           ))}
         </ul>
