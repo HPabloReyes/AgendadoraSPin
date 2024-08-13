@@ -20,10 +20,14 @@ export async function POST(req) {
           feature.geometry.type === "Point" &&
           Array.isArray(feature.geometry.coordinates)
         ) {
+          // Añade el campo "estatus" con valor "new" si no existe
           return {
             type: feature.type,
-            properties: feature.properties,
+            properties: {
+              ...feature.properties,
+            },
             geometry: feature.geometry,
+            estatus: feature.properties.estatus || "new", // Asigna "new" si estatus no está definido
           };
         } else {
           throw new Error("Invalid feature format");
@@ -32,11 +36,11 @@ export async function POST(req) {
 
       const existingRoute = await Rutas.findOne({ name: routeName });
       if (existingRoute) {
-        // Append new features to existing route
+        // Agrega nuevas características a la ruta existente
         existingRoute.features = [...existingRoute.features, ...features];
         await existingRoute.save();
       } else {
-        // Create a new route document
+        // Crea un nuevo documento de ruta
         const newRoute = new Rutas({ name: routeName, features });
         await newRoute.save();
       }
@@ -57,6 +61,63 @@ export async function POST(req) {
   }
 }
 
+export async function PUT(req) {
+  try {
+    const { idCliente, newStatus } = await req.json();
+
+    if (!idCliente || !newStatus) {
+      return NextResponse.json(
+        { message: "Missing idCliente or newStatus" },
+        { status: 400 }
+      );
+    }
+
+    // Encuentra la ruta que contiene la característica con el ID de cliente especificado
+    const route = await Rutas.findOne({
+      "features.properties.ID_Cliente": idCliente,
+    });
+
+    if (!route) {
+      return NextResponse.json(
+        { message: "Route or feature not found" },
+        { status: 404 }
+      );
+    }
+
+    // Actualiza el estatus de la característica con el ID de cliente especificado
+    let updated = false;
+    route.features = route.features.map((feature) => {
+      if (feature.properties.ID_Cliente === idCliente) {
+        updated = true;
+        return {
+          ...feature,
+          estatus: newStatus, // Actualiza el estatus
+        };
+      }
+      return feature;
+    });
+
+    if (!updated) {
+      return NextResponse.json(
+        { message: "Feature not found" },
+        { status: 404 }
+      );
+    }
+
+    // Guarda los cambios en la base de datos
+    await route.save();
+
+    return NextResponse.json({
+      message: "Feature status updated successfully!",
+    });
+  } catch (error) {
+    console.error("Error updating feature status:", error.message);
+    return NextResponse.json(
+      { message: `Error updating feature status: ${error.message}` },
+      { status: 500 }
+    );
+  }
+}
 export async function GET() {
   try {
     const data = await Rutas.find();

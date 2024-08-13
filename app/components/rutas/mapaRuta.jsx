@@ -25,7 +25,22 @@ function MapaRuta({ features }) {
       const lon = feature.properties.COORDENADA_X;
       const name = feature.properties.Name;
       const idCliente = feature.properties.ID_Cliente;
-      return { lat, lng: lon, name, idCliente, color: "gray" };
+      const status = feature.estatus || "new";
+      return {
+        lat,
+        lng: lon,
+        name,
+        idCliente,
+        status, // Agregamos el estatus aquí
+        color:
+          status === "Ganado"
+            ? "green"
+            : status === "Perdido"
+            ? "red"
+            : status === "Proceso"
+            ? "yellow"
+            : "gray",
+      };
     });
 
     setCenters(newCenters);
@@ -53,14 +68,41 @@ function MapaRuta({ features }) {
     setMap(null);
   }, []);
 
-  const handleClick = (color) => {
+  const updateStatus = async (status) => {
+    if (!selected) return;
+
     const updatedCenters = centers.map((center) =>
       center.lat === selected.lat && center.lng === selected.lng
-        ? { ...center, color }
+        ? {
+            ...center,
+            status,
+            color:
+              status === "Ganado"
+                ? "green"
+                : status === "Perdido"
+                ? "red"
+                : status === "Proceso"
+                ? "yellow"
+                : "gray",
+          }
         : center
     );
     setCenters(updatedCenters);
-    setSelected({ ...selected, color });
+
+    try {
+      await fetch("/api/rutas", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          idCliente: selected.idCliente,
+          newStatus: status,
+        }),
+      });
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
   };
 
   return (
@@ -101,21 +143,21 @@ function MapaRuta({ features }) {
                 <div className="flex flex-col items-center justify-center">
                   <div
                     className="flex items-center space-x-2 cursor-pointer"
-                    onClick={() => handleClick("red")}
+                    onClick={() => updateStatus("Perdido")}
                   >
                     <p className="m-1 w-10">Perdido</p>
                     <p className="bg-red-500 w-3 h-3 rounded-full"></p>
                   </div>
                   <div
                     className="flex items-center space-x-2 cursor-pointer"
-                    onClick={() => handleClick("yellow")}
+                    onClick={() => updateStatus("Proceso")}
                   >
                     <p className="m-1 w-10">Proceso</p>
-                    <p className="bg-yellow-500 w-3 h-3 rounded-full"></p>
+                    <p className="bg-yellow-300 w-3 h-3 rounded-full"></p>
                   </div>
                   <div
                     className="flex items-center space-x-2 cursor-pointer"
-                    onClick={() => handleClick("green")}
+                    onClick={() => updateStatus("Ganado")}
                   >
                     <p className="m-1 w-10">Ganado</p>
                     <p className="bg-green-500 w-3 h-3 rounded-full"></p>

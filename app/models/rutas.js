@@ -33,6 +33,11 @@ const featureSchema = new mongoose.Schema({
       required: true,
     },
   },
+  estatus: {
+    type: String,
+    enum: ["Perdido", "Proceso", "Ganado", "new"],
+    required: true,
+  },
 });
 
 const routeSchema = new mongoose.Schema({
