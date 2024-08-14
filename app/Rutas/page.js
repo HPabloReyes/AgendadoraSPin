@@ -52,9 +52,9 @@ export default function Rutas() {
     }
   }, [rutas, usuario]);
 
-  console.log(usuario.usuario);
+  //console.log(usuario.usuario);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <img className="m-auto " src={"/lg.gif"} />;
   if (error) return <p>Error: {error.message}</p>;
 
   return (

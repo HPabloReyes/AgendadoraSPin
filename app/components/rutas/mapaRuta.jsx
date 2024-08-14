@@ -18,6 +18,7 @@ function MapaRuta({ features }) {
 
   const [centers, setCenters] = useState([]);
   const [selected, setSelected] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
 
   useEffect(() => {
     const newCenters = features.map((feature) => {
@@ -31,7 +32,7 @@ function MapaRuta({ features }) {
         lng: lon,
         name,
         idCliente,
-        status, // Agregamos el estatus aquí
+        status,
         color:
           status === "Ganado"
             ? "green"
@@ -46,6 +47,25 @@ function MapaRuta({ features }) {
     setCenters(newCenters);
   }, [features]);
 
+  useEffect(() => {
+    if (navigator.geolocation) {
+      const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => console.error("Error getting location:", error),
+        { enableHighAccuracy: true }
+      );
+
+      return () => navigator.geolocation.clearWatch(watchId);
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }, []);
+
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: API_KEY,
@@ -57,11 +77,14 @@ function MapaRuta({ features }) {
     function callback(map) {
       const bounds = new window.google.maps.LatLngBounds();
       centers.forEach((center) => bounds.extend(center));
+      if (userLocation) {
+        bounds.extend(userLocation);
+      }
       map.fitBounds(bounds);
 
       setMap(map);
     },
-    [centers]
+    [centers, userLocation]
   );
 
   const onUnmount = useCallback(function callback(map) {
@@ -112,7 +135,7 @@ function MapaRuta({ features }) {
           mapContainerStyle={containerStyle}
           center={
             centers.length > 0 ? centers[0] : { lat: -3.745, lng: -38.523 }
-          } // Center the map on the first location
+          }
           zoom={14}
           onLoad={onLoad}
           onUnmount={onUnmount}
@@ -131,6 +154,19 @@ function MapaRuta({ features }) {
               }}
             />
           ))}
+
+          {userLocation && (
+            <Marker
+              position={userLocation}
+              icon={{
+                path: window.google.maps.SymbolPath.CIRCLE,
+                scale: 10,
+                fillColor: "blue",
+                fillOpacity: 1,
+                strokeWeight: 1,
+              }}
+            />
+          )}
 
           {selected && (
             <InfoWindow
